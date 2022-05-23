@@ -7,6 +7,7 @@ describe('Airport', () => {
   const airportStormy = new Airport(this.capacity, stormyWeather);
   const plane = { name: 'Boeing 737' };
   const plane2 = { name: 'Airbus A330' };
+  const plane3 = { name: 'CRJ Series' }
 
   it('is an instance of the Airport class', () => {
     expect(airport).toBeInstanceOf(Airport);
@@ -22,6 +23,10 @@ describe('Airport', () => {
     it('lands a plane at the airport', () => {
       airport.land(plane);
       expect(airport.hangar.length).toEqual(1);
+    });
+
+    it('is not allowed in stormy weather', () => {
+      expect(() => { airportStormy.land(plane2) }).toThrowError('Cannot land due to stormy weather');
     });
 
     it('prevents landing when airport is full', () => {
@@ -53,7 +58,7 @@ describe('Airport', () => {
     });
 
     it('does not allow a plane to take off in stormy weather', () => {
-      expect(() => { airportStormy.takeOff({}) }).toThrowError('Cannot take off due to stormy weather');
+      expect(() => { airportStormy.takeOff(plane3) }).toThrowError('Cannot take off due to stormy weather');
     });
   });
 

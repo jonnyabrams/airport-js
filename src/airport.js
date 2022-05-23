@@ -8,6 +8,8 @@ class Airport {
   }
 
   land(plane) {
+    if (this.weather.outlook === 'stormy') throw new Error ('Cannot land due to stormy weather');
+
     if (this.hangar.length === this.capacity) throw new Error ('Airport already at capacity');
 
     this.hangar.push(plane);
