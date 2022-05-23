@@ -9,6 +9,20 @@ class Airport {
   }
 
   land(plane) {
+    this.#landChecklist(plane);
+    this.hangar.push(plane);
+  }
+
+  takeOff(plane) {
+    this.#takeOffChecklist(plane);
+    this.hangar = this.hangar.filter((landedPlane) => {
+      landedPlane !== plane;
+    });
+
+    this.#takeOffMessage(plane);
+  }
+
+  #landChecklist(plane) {
     if (this.weather.outlook === 'stormy') throw new Error ('Cannot land due to stormy weather');
 
     if (this.hangar.length === this.capacity) throw new Error ('Airport already at capacity');
@@ -17,10 +31,9 @@ class Airport {
 
     plane.airport = this.name;
     plane.isLanded = true;
-    this.hangar.push(plane);
   }
 
-  takeOff(plane) {
+  #takeOffChecklist(plane) {
     if (this.weather.outlook === 'stormy') throw new Error ('Cannot take off due to stormy weather');
 
     if (plane.isLanded === false) throw new Error ('Plane has already taken off');
@@ -29,10 +42,9 @@ class Airport {
 
     plane.airport = '';
     plane.isLanded = false;
-    this.hangar = this.hangar.filter((landedPlane) => {
-      landedPlane !== plane;
-    });
+  }
 
+  #takeOffMessage(plane) {
     console.log(`Plane ${plane.name} has taken off successfully`);
   }
 }
