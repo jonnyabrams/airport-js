@@ -1,8 +1,9 @@
 const Weather = require('./weather');
 
 class Airport {
-  constructor(weather = new Weather, capacity = 100) {
+  constructor(name, weather = new Weather, capacity = 100) {
     this.hangar = [];
+    this.name = name;
     this.capacity = capacity;
     this.weather = weather;
   }
@@ -12,6 +13,8 @@ class Airport {
 
     if (this.hangar.length === this.capacity) throw new Error ('Airport already at capacity');
 
+    plane.airport = this.name;
+    plane.isLanded = true;
     this.hangar.push(plane);
   }
 
