@@ -11,6 +11,8 @@ class Airport {
     this.hangar = this.hangar.filter((landedPlane) => {
       landedPlane !== plane;
     });
+
+    console.log(`Plane ${plane.name} has taken off successfully`);
   }
 }
 
