@@ -3,8 +3,8 @@ const Airport = require('../src/airport');
 describe('Airport', () => {
   const stormyWeather = { outlook: 'stormy' }
   const sunnyWeather = { outlook: 'sunny' }
-  const airport = new Airport(this.capacity, sunnyWeather);
-  const airportStormy = new Airport(this.capacity, stormyWeather);
+  const airport = new Airport(sunnyWeather);
+  const airportStormy = new Airport(stormyWeather);
   const plane = { name: 'Boeing 737' };
   const plane2 = { name: 'Airbus A330' };
   const plane3 = { name: 'CRJ Series' }
@@ -15,7 +15,7 @@ describe('Airport', () => {
 
   it('has a capacity of 100 that can be overridden', () => {
     expect(airport.capacity).toEqual(100);
-    const airport2 = new Airport(150, sunnyWeather);
+    const airport2 = new Airport(sunnyWeather, 150);
     expect(airport2.capacity).toEqual(150);
   });
 
@@ -30,13 +30,13 @@ describe('Airport', () => {
     });
 
     it('prevents landing when airport is full', () => {
-      airport3 = new Airport(this.capacity, sunnyWeather);
+      airport3 = new Airport(sunnyWeather);
       for (let i = 0; i < 100; i++) {
         airport3.land({});
       };
       expect(() => { airport3.land(plane2) }).toThrowError('Airport already at capacity');
       
-      airport4 = new Airport(200, sunnyWeather);
+      airport4 = new Airport(sunnyWeather, 200);
       for (let i = 0; i < 200; i++) {
         airport4.land({});
       };

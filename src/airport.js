@@ -1,7 +1,7 @@
 const Weather = require('./weather');
 
 class Airport {
-  constructor(capacity = 100, weather = new Weather) {
+  constructor(weather = new Weather, capacity = 100) {
     this.hangar = [];
     this.capacity = capacity;
     this.weather = weather;
