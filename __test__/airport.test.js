@@ -1,7 +1,10 @@
 const Airport = require('../src/airport');
 
 describe('Airport', () => {
-  const airport = new Airport;
+  const stormyWeather = { outlook: 'stormy' }
+  const sunnyWeather = { outlook: 'sunny' }
+  const airport = new Airport(this.capacity, sunnyWeather);
+  const airportStormy = new Airport(this.capacity, stormyWeather);
   const plane = { name: 'Boeing 737' };
   const plane2 = { name: 'Airbus A330' };
 
@@ -11,7 +14,7 @@ describe('Airport', () => {
 
   it('has a capacity of 100 that can be overridden', () => {
     expect(airport.capacity).toEqual(100);
-    const airport2 = new Airport(150);
+    const airport2 = new Airport(150, sunnyWeather);
     expect(airport2.capacity).toEqual(150);
   });
 
@@ -22,13 +25,13 @@ describe('Airport', () => {
     });
 
     it('prevents landing when airport is full', () => {
-      airport3 = new Airport;
+      airport3 = new Airport(this.capacity, sunnyWeather);
       for (let i = 0; i < 100; i++) {
         airport3.land({});
       };
       expect(() => { airport3.land(plane2) }).toThrowError('Airport already at capacity');
       
-      airport4 = new Airport (200);
+      airport4 = new Airport(200, sunnyWeather);
       for (let i = 0; i < 200; i++) {
         airport4.land({});
       };
@@ -47,6 +50,10 @@ describe('Airport', () => {
       console.log = jest.fn();
       airport.takeOff(plane);
       expect(console.log).toHaveBeenCalledWith('Plane Boeing 737 has taken off successfully');
+    });
+
+    it('does not allow a plane to take off in stormy weather', () => {
+      expect(() => { airportStormy.takeOff({}) }).toThrowError('Cannot take off due to stormy weather');
     });
   });
 
