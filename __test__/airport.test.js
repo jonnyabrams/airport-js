@@ -35,6 +35,10 @@ describe('Airport', () => {
       expect(plane.isLanded).toEqual(true);
     });
 
+    it('cannot land if it is already landed', () => {
+      expect(() => { airport.land(plane) }).toThrowError('Plane has already landed');
+    });
+
     it('is not allowed in stormy weather', () => {
       expect(() => { airportStormy.land(plane2) }).toThrowError('Cannot land due to stormy weather');
     });
@@ -64,6 +68,7 @@ describe('Airport', () => {
     });
 
     it('confirms the plane has taken off', () => {
+      airport2.takeOff(plane);
       airport.land(plane);
       console.log = jest.fn();
       airport.takeOff(plane);

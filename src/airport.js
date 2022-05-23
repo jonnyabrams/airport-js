@@ -13,6 +13,8 @@ class Airport {
 
     if (this.hangar.length === this.capacity) throw new Error ('Airport already at capacity');
 
+    if (plane.isLanded === true) throw new Error ('Plane has already landed');
+
     plane.airport = this.name;
     plane.isLanded = true;
     this.hangar.push(plane);
