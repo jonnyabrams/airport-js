@@ -62,6 +62,10 @@ describe('Airport', () => {
       expect(airport.hangar.length).toEqual(0);
     });
 
+    it('does not let a plane take off if it has already taken off', () => {
+      expect(() => { airport.takeOff(plane) }).toThrowError('Plane has already taken off');
+    });
+
     it('only allows a plane to take off from an airport it is in', () => {
       airport2.land(plane);
       expect(() => { airport3.takeOff(plane) }).toThrowError('Plane cannot take off from this airport');
