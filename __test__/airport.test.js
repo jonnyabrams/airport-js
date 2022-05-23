@@ -3,14 +3,14 @@ const Airport = require('../src/airport');
 describe('Airport', () => {
   const stormyWeather = { outlook: 'stormy' }
   const sunnyWeather = { outlook: 'sunny' }
-  const airport = new Airport('Heathrow', sunnyWeather);
-  const airport2 = new Airport('London City', sunnyWeather, 150);
-  const airport3 = new Airport('Stanstead', sunnyWeather);
-  const airport4 = new Airport('Luton', sunnyWeather, 200);
-  const airportStormy = new Airport('Gatwick', stormyWeather);
+  const airport = new Airport('Heathrow', this.capacity, sunnyWeather);
+  const airport2 = new Airport('London City', 150, sunnyWeather);
+  const airport3 = new Airport('Stanstead', this.capacity, sunnyWeather);
+  const airport4 = new Airport('Luton', 200, sunnyWeather);
+  const airportStormy = new Airport('Gatwick', this.capacity, stormyWeather);
   const plane = { name: 'Boeing 737' };
   const plane2 = { name: 'Airbus A330' };
-  const plane3 = { name: 'CRJ Series' }
+  const plane3 = { name: 'Bombardier CRJ' }
 
   it('is an instance of the Airport class', () => {
     expect(airport).toBeInstanceOf(Airport);

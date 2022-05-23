@@ -1,7 +1,7 @@
 const Weather = require('./weather');
 
 class Airport {
-  constructor(name, weather = new Weather, capacity = 100) {
+  constructor(name, capacity = 100, weather = new Weather) {
     this.hangar = [];
     this.name = name;
     this.capacity = capacity;
@@ -11,6 +11,7 @@ class Airport {
   land(plane) {
     this.#landChecklist(plane);
     this.hangar.push(plane);
+    this.#landMessage(plane);
   }
 
   takeOff(plane) {
@@ -42,6 +43,10 @@ class Airport {
 
     plane.airport = '';
     plane.isLanded = false;
+  }
+
+  #landMessage(plane) {
+    console.log(`Plane ${plane.name} has landed at ${this.name}`);
   }
 
   #takeOffMessage(plane) {
