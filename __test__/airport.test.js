@@ -4,6 +4,9 @@ describe('Airport', () => {
   const stormyWeather = { outlook: 'stormy' }
   const sunnyWeather = { outlook: 'sunny' }
   const airport = new Airport('Heathrow', sunnyWeather);
+  const airport2 = new Airport('London City', sunnyWeather, 150);
+  const airport3 = new Airport('Stanstead', sunnyWeather);
+  const airport4 = new Airport('Luton', sunnyWeather, 200);
   const airportStormy = new Airport('Gatwick', stormyWeather);
   const plane = { name: 'Boeing 737' };
   const plane2 = { name: 'Airbus A330' };
@@ -15,7 +18,6 @@ describe('Airport', () => {
 
   it('has a capacity of 100 that can be overridden', () => {
     expect(airport.capacity).toEqual(100);
-    const airport2 = new Airport('London City', sunnyWeather, 150);
     expect(airport2.capacity).toEqual(150);
   });
 
@@ -38,13 +40,11 @@ describe('Airport', () => {
     });
 
     it('prevents landing when airport is full', () => {
-      airport3 = new Airport('Stanstead', sunnyWeather);
       for (let i = 0; i < 100; i++) {
         airport3.land({});
       };
       expect(() => { airport3.land(plane2) }).toThrowError('Airport already at capacity');
       
-      airport4 = new Airport('Luton', sunnyWeather, 200);
       for (let i = 0; i < 200; i++) {
         airport4.land({});
       };
@@ -58,11 +58,24 @@ describe('Airport', () => {
       expect(airport.hangar.length).toEqual(0);
     });
 
+    it('only allows a plane to take off from an airport it is in', () => {
+      airport2.land(plane);
+      expect(() => { airport3.takeOff(plane) }).toThrowError('Plane cannot take off from this airport');
+    });
+
     it('confirms the plane has taken off', () => {
       airport.land(plane);
       console.log = jest.fn();
       airport.takeOff(plane);
       expect(console.log).toHaveBeenCalledWith('Plane Boeing 737 has taken off successfully');
+    });
+
+    it('updates the airport of the plane', () => {
+      expect(plane.airport).toEqual('');
+    });
+
+    it('updates the landed status of the plane', () => {
+      expect(plane.isLanded).toEqual(false);
     });
 
     it('does not allow a plane to take off in stormy weather', () => {

@@ -21,6 +21,10 @@ class Airport {
   takeOff(plane) {
     if (this.weather.outlook === 'stormy') throw new Error ('Cannot take off due to stormy weather');
 
+    if (plane.airport !== this.name) throw new Error ('Plane cannot take off from this airport');
+
+    plane.airport = '';
+    plane.isLanded = false;
     this.hangar = this.hangar.filter((landedPlane) => {
       landedPlane !== plane;
     });
